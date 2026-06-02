@@ -107,7 +107,7 @@ Cuando un alumno crea un Pull Request, el CI:
 3. **Agrega labels** como `auto-validado`
 4. **No cierra el PR** (el profesor lo hace manualmente)
 
-![CI en acción](https://docs.github.com/assets/cb-25535/images/help/pull_requests/merge_box/pull-request-merge-pr-checks.png)
+![Estado del CI](https://github.com/ajgutierr3z/WebAsServices/actions/workflows/revisar-entregas.yml/badge.svg)
 
 ---
 ## 📊 Estadísticas de Entregas
@@ -119,7 +119,7 @@ Cuando un alumno crea un Pull Request, el CI:
 | Total de PRs | ![GitHub pull requests](https://img.shields.io/github/issues-pr/ajgutierr3z/WebAsServices) |
 | Entregas validadas |  ![PRs Cerrados](https://img.shields.io/github/issues-pr-closed/ajgutierr3z/WebAsServices?label=&color=success) |
 | Alumnos activos | ![GitHub forks](https://img.shields.io/github/forks/ajgutierr3z/WebAsServices?label=&color=informational) |
-| Cobertura de prácticas | Práctica 1, 2, 3 |
+| Cobertura de prácticas | Todas|
 
 ### 🏷️ Estado de las entregas
 
