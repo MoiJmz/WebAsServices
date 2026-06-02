@@ -117,7 +117,7 @@ Cuando un alumno crea un Pull Request, el CI:
 | Métrica | Valor |
 |---------|-------|
 | Total de PRs | ![GitHub pull requests](https://img.shields.io/github/issues-pr/ajgutierr3z/WebAsServices) |
-| Entregas validadas | ✅ [Ver Actions]([https://github.com/ajgutierr3z/WebAsServices/actions](https://img.shields.io/github/issues-pr-closed/ajgutierr3z/WebAsServices?label=&color=success)) |
+| Entregas validadas |  ![PRs Cerrados]([https://github.com/ajgutierr3z/WebAsServices/actions](https://img.shields.io/github/issues-pr-closed/ajgutierr3z/WebAsServices?label=&color=success)) |
 | Alumnos activos | ![GitHub forks](https://img.shields.io/github/forks/ajgutierr3z/WebAsServices?label=&color=informational) |
 | Cobertura de prácticas | Práctica 1, 2, 3 |
 
