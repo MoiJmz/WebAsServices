@@ -6,7 +6,19 @@ const input = document.getElementById('nuevaTarea');
 function renderizarTareas(tareas) {
     lista.innerHTML = '';
     tareas.forEach(t => {
-        lista.innerHTML += `<li>${t.id} - ${t.titulo}</li>`;
+        // Estilo tachado si está completada
+        const textStyle = t.completada ? 'text-decoration: line-through; color: gray;' : '';
+        
+        lista.innerHTML += `
+            <li>
+                <span style="${textStyle}">${t.id} - ${t.titulo}</span>
+                <div style="margin-top: 5px;">
+                    <button onclick="completarTareaREST(${t.id}, ${t.completada ? 0 : 1})"> completada</button>
+                    <button onclick="editarTareaREST(${t.id}, prompt('Nuevo título:', '${t.titulo}'))"> Editar</button>
+                    <button onclick="borrarTareaREST(${t.id})"> Borrar</button>
+                </div>
+            </li>
+        `;
     });
 }
 
@@ -15,7 +27,6 @@ function renderizarTareas(tareas) {
 // ==========================================
 
 function cargarTareasREST() {
-    // REST: Se hace un simple GET a la URL del recurso
     fetch('api.php')
         .then(res => res.json())
         .then(data => renderizarTareas(data));
@@ -23,7 +34,7 @@ function cargarTareasREST() {
 
 function crearTareaREST() {
     const titulo = input.value;
-    // REST: Se hace un POST enviando un objeto JSON plano
+    if (!titulo) return;
     fetch('api.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -34,17 +45,42 @@ function crearTareaREST() {
     });
 }
 
+function borrarTareaREST(id) {
+    fetch('api.php', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: id })
+    }).then(() => cargarTareasREST());
+}
+
+function editarTareaREST(id, nuevoTitulo) {
+    if (!nuevoTitulo) return; // Si cancela el prompt
+    fetch('api.php', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: id, titulo: nuevoTitulo })
+    }).then(() => cargarTareasREST());
+}
+
+function completarTareaREST(id, estado) {
+    fetch('api.php', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: id, completada: estado })
+    }).then(() => cargarTareasREST());
+}
+
 // ==========================================
 // INTERACCIONES GRAPHQL
 // ==========================================
 
 function cargarTareasGraphQL() {
-    // GraphQL: se manda un POST con un string especificando qué campos queremos
     const query = `
         query {
             tareas {
                 id
                 titulo
+                completada
             }
         }
     `;
@@ -55,14 +91,13 @@ function cargarTareasGraphQL() {
     })
     .then(res => res.json())
     .then(response => {
-        // GraphQL siempre devuelve los datos dentro de un objeto "data"
         renderizarTareas(response.data.tareas);
     });
 }
 
 function crearTareaGraphQL() {
     const titulo = input.value;
-    // GraphQL: Mandamos un POST con un string tipo "mutation" y pasamos variables
+    if (!titulo) return;
     const mutation = `
         mutation($tituloStr: String!) {
             crearTarea(titulo: $tituloStr)
